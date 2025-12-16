@@ -1,0 +1,18 @@
+{
+  "home": "Home",
+  "apply": "Apply",
+  "reset": "Reset",
+  "explore_benchmarks": "Explore Benchmarks",
+  "technical_summary": "Technical Summary",
+  "step_by_step": "Step-by-Step: SEN vs IEEE Quantization",
+  "input_value": "Input Value",
+  "sen_quantization": "SEN Quantization",
+  "ieee_quantization": "IEEE Quantization",
+  "comparison": "Comparison",
+  "rounding": "Rounding",
+  "accumulation": "Accumulation",
+  "seed": "Seed",
+  "language": "Language",
+  "english": "English",
+  "chinese": "Chinese"
+}
