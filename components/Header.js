@@ -4,6 +4,7 @@ export default function Header(){
   return (
     <header className="fixed top-6 left-0 right-0 mx-auto z-50 bg-white/90 shadow-xl border border-slate-200/60 transition-all duration-500 rounded-full px-6 py-2 flex items-center justify-between max-w-4xl" style={{backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)'}}>
       <div className="flex items-center gap-4">
+        {/* comment */}
         <span className="inline-flex items-center gap-2">
           <Link href="/" legacyBehavior>
             <a className="flex items-center group" style={{minWidth:140}}>
