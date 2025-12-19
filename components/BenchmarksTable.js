@@ -64,29 +64,31 @@ export default function BenchmarksTable() {
   }, [systems]);
 
   return (
-    <div className="liquid-glass p-6 shadow-xl w-full max-w-4xl mx-auto mt-8">
-      <h2 className="text-2xl font-bold mb-4 text-[#232946] text-center">ML Operation Benchmarks</h2>
-      <table className="min-w-full text-sm text-[#232946]">
-        <thead>
-          <tr className="border-b border-indigo-400/30">
-            <th className="px-4 py-2 text-left">System</th>
-            <th className="px-4 py-2 text-center">Dot Product</th>
-            <th className="px-4 py-2 text-center">Matmul</th>
-            <th className="px-4 py-2 text-center">1D Convolution</th>
-          </tr>
-        </thead>
-        <tbody>
-          {results.map(row => (
-            <tr key={row.name} className="border-b border-slate-400/10 hover:bg-indigo-900/10 transition">
-              <td className="px-4 py-2 font-semibold text-indigo-700">{row.name}</td>
-              <td className="px-4 py-2 text-center font-mono">{Number(row.dot).toPrecision(8)}</td>
-              <td className="px-4 py-2 text-center font-mono">{Number(row.matmul).toPrecision(8)}</td>
-              <td className="px-4 py-2 text-center font-mono">{Number(row.conv).toPrecision(8)}</td>
+    <div className="liquid-glass p-3 sm:p-6 shadow-xl w-full max-w-6xl mx-auto mt-4 sm:mt-8">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 text-[#232946] text-center">ML Operation Benchmarks</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-xs sm:text-sm text-[#232946]">
+          <thead>
+            <tr className="border-b border-indigo-400/30">
+              <th className="px-2 sm:px-4 py-2 text-left">System</th>
+              <th className="px-2 sm:px-4 py-2 text-center whitespace-nowrap">Dot Product</th>
+              <th className="px-2 sm:px-4 py-2 text-center whitespace-nowrap">Matmul</th>
+              <th className="px-2 sm:px-4 py-2 text-center whitespace-nowrap">1D Conv</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="text-xs text-gray-500 mt-4 text-center">All results are computed using the current backend logic for each system. Values are for demonstration and may not reflect real hardware.</div>
+          </thead>
+          <tbody>
+            {results.map(row => (
+              <tr key={row.name} className="border-b border-slate-400/10 hover:bg-indigo-900/10 transition">
+                <td className="px-2 sm:px-4 py-2 font-semibold text-indigo-700 whitespace-nowrap">{row.name}</td>
+                <td className="px-2 sm:px-4 py-2 text-center font-mono text-[10px] sm:text-xs">{Number(row.dot).toPrecision(6)}</td>
+                <td className="px-2 sm:px-4 py-2 text-center font-mono text-[10px] sm:text-xs">{Number(row.matmul).toPrecision(6)}</td>
+                <td className="px-2 sm:px-4 py-2 text-center font-mono text-[10px] sm:text-xs">{Number(row.conv).toPrecision(6)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="text-xs text-gray-500 mt-3 sm:mt-4 text-center">All results computed using current backend logic for each system. Values are for demonstration.</div>
     </div>
   );
 }

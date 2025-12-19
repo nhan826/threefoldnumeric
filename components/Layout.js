@@ -7,16 +7,14 @@ export function Layout({ children }) {
   // Responsive: on mobile, overlay; on desktop, shift main content
   return (
     <SidebarContext.Provider value={{ open: sidebarOpen, setOpen: setSidebarOpen }}>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-[#f7f8fa] overflow-x-hidden">
         <Header />
-        <div className="flex flex-1 relative">
+        <div className="flex flex-1 relative w-full overflow-hidden">
           <main
-            className={`flex-1 p-6 max-w-7xl mx-auto transition-all duration-300`}
-            style={{ minHeight: 'calc(100vh - 64px)', paddingTop: '4.5rem' }}
+            className={`flex-1 w-full overflow-x-hidden transition-all duration-300`}
+            style={{ minHeight: 'calc(100vh - 64px)', paddingTop: '4.5rem', paddingBottom: 'env(safe-area-inset-bottom, 1.5rem)' }}
           >
-            <div className="canvas-grid p-6">
-              {children}
-            </div>
+            {children}
           </main>
           <GlobalControls />
         </div>

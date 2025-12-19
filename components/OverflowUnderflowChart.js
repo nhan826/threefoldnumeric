@@ -7,12 +7,10 @@ import * as d3 from 'd3';
  * Props:
  *   system: { name: string, min: number, max: number }
  */
-export default function OverflowUnderflowChart({ system }) {
+export default function OverflowUnderflowChart({ system, width = 480, height = 220 }) {
   const ref = useRef();
 
   useEffect(() => {
-    const width = 480;
-    const height = 220;
     const margin = { top: 30, right: 30, bottom: 40, left: 50 };
     const svg = d3.select(ref.current);
     svg.selectAll('*').remove();
@@ -24,6 +22,13 @@ export default function OverflowUnderflowChart({ system }) {
 
     // Y scale: just a band for visual effect
     const y = d3.scaleLinear().domain([0, 1]).range([height - margin.bottom, margin.top]);
+
+    // Draw SVG with viewBox for responsiveness
+    svg
+      .attr('viewBox', `0 0 ${width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%')
+      .style('height', 'auto');
 
     // Draw axis
     svg.append('g')
@@ -81,12 +86,12 @@ export default function OverflowUnderflowChart({ system }) {
   }, [system]);
 
   return (
-    <div className="frosted-glass p-4 rounded-xl shadow-lg">
+    <div className="frosted-glass p-4 rounded-xl shadow-lg w-full">
       <h3 className="text-lg font-semibold mb-2 text-cyan-100">Overflow & Underflow</h3>
-      <svg ref={ref} width={480} height={220} />
-      <div className="text-xs text-cyan-200 mt-2">
-        <span className="mr-2"><span className="inline-block w-3 h-3 rounded-full align-middle mr-1" style={{background:'#ff5050',opacity:0.5}}></span>Overflow</span>
-        <span className="mr-2"><span className="inline-block w-3 h-3 rounded-full align-middle mr-1" style={{background:'#50baff',opacity:0.5}}></span>Underflow</span>
+      <svg ref={ref} />
+      <div className="text-xs text-cyan-200 mt-2 flex flex-wrap gap-3">
+        <span><span className="inline-block w-3 h-3 rounded-full align-middle mr-1" style={{background:'#ff5050',opacity:0.5}}></span>Overflow</span>
+        <span><span className="inline-block w-3 h-3 rounded-full align-middle mr-1" style={{background:'#50baff',opacity:0.5}}></span>Underflow</span>
         <span><span className="inline-block w-3 h-3 rounded-full align-middle mr-1" style={{background:'#b0eaff',opacity:0.3}}></span>Representable</span>
       </div>
     </div>

@@ -32,12 +32,15 @@ export default function GlobalControls() {
     <>
       {/* Bottom bar controls */}
       <aside
-        className={`fixed left-0 right-0 mx-auto bottom-0 z-30 max-w-4xl bg-white shadow-2xl border border-gray-200 rounded-t-3xl px-6 pt-7 pb-4 flex flex-col items-stretch gap-4 transition-transform duration-500 will-change-transform overflow-visible`}
+        className={`fixed left-0 right-0 mx-auto bottom-0 z-30 w-full sm:max-w-5xl md:max-w-7xl shadow-2xl rounded-none sm:rounded-t-3xl px-2 sm:px-6 pt-6 sm:pt-7 pb-4 flex flex-col items-stretch gap-4 transition-transform duration-500 will-change-transform overflow-visible`}
         style={{
+          backgroundColor: 'rgba(100, 116, 139, 0.75)',
+          borderTop: '1px solid rgba(71, 85, 105, 0.8)',
           backdropFilter: 'blur(18px)',
           WebkitBackdropFilter: 'blur(18px)',
           minHeight: open ? 'auto' : '36px',
           transform: open ? 'translateY(0)' : 'translateY(75%)',
+          paddingBottom: 'calc(env(safe-area-inset-bottom, 1.5rem) + 0.5rem)',
         }}
       >
         {/* Arrow button centered on top border */}
@@ -73,8 +76,8 @@ export default function GlobalControls() {
                 }
                 const baseClass = isSEN
                   ? (isSelected
-                      ? 'bg-green-500/90 hover:bg-green-600 text-[#232946]'
-                      : 'bg-green-100/90 hover:bg-green-200 text-[#232946]')
+                      ? 'shadow-lg'
+                      : 'shadow-md')
                   : 'card text-[#232946]';
                 return (
                   <button
@@ -88,7 +91,13 @@ export default function GlobalControls() {
                         ? 'focus-visible:ring-4 focus-visible:ring-green-500 active:ring-4 active:ring-green-600 focus-visible:border-green-500 focus-visible:border-4'
                         : 'focus-visible:ring-4 focus-visible:ring-blue-500 active:ring-4 active:ring-blue-600 focus-visible:border-blue-500 focus-visible:border-4'}
                       ${baseClass} ${borderClass} ${!isSelected && !isSEN ? 'hover:translate-y-0.5' : ''}`}
-                    style={isSEN ? {fontWeight:'bold', fontSize:'1.08rem'} : {}}
+                    style={isSEN ? {
+                      backgroundColor: isSelected ? '#10b981' : '#06d6a0',
+                      color: '#ffffff',
+                      fontWeight: 'bold',
+                      fontSize: '1.08rem',
+                      border: isSelected ? '2px solid #fff' : '1px solid #7ee8c1'
+                    } : {fontWeight: 'normal'}}
                   >
                     <div>
                       <div className="text-sm font-medium">{s.name}</div>
@@ -99,39 +108,39 @@ export default function GlobalControls() {
               });
             })()}
           </div>
-          {/* Second row: controls and buttons */}
-          <div className="flex flex-row flex-nowrap gap-2 items-end mt-2 min-w-0">
-            <div className="flex-shrink-0 min-w-[90px]">
-              <label className="text-[0.85rem] text-black-300">Rounding</label>
+          {/* Second row: controls and buttons - responsive layout */}
+          <div className="flex flex-col sm:flex-row flex-nowrap gap-3 sm:gap-2 items-stretch sm:items-end mt-2 min-w-0 overflow-hidden">
+            <div className="flex-shrink-0 w-full sm:flex-1 sm:min-w-0">
+              <label className="text-xs sm:text-sm text-slate-200 block">Rounding</label>
               <select
                 value={rounding}
                 onChange={e => setRounding(e.target.value)}
-                className="mt-1 w-full p-1 rounded text-xs bg-white text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 appearance-none"
-                style={{ backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em' }}
+                style={{ backgroundColor: '#475569', color: 'white', borderColor: '#374151', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em' }}
+                className="mt-1 w-full p-2 rounded text-sm border focus:outline-none focus:ring-2 appearance-none"
               >
-                <option value="nearest" className="bg-white text-gray-900">nearest</option>
-                <option value="stochastic" className="bg-white text-gray-900">stochastic</option>
+                <option value="nearest" style={{backgroundColor: '#475569', color: 'white'}}>nearest</option>
+                <option value="stochastic" style={{backgroundColor: '#475569', color: 'white'}}>stochastic</option>
               </select>
             </div>
-            <div className="flex-shrink-0 min-w-[90px]">
-              <label className="text-[0.85rem] text-black-300">Accum.</label>
+            <div className="flex-shrink-0 w-full sm:flex-1 sm:min-w-0">
+              <label className="text-xs sm:text-sm text-slate-200 block">Accum.</label>
               <select
                 value={accumulation}
                 onChange={e => setAccumulation(e.target.value)}
-                className="mt-1 w-full p-1 rounded text-xs bg-white text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 appearance-none"
-                style={{ backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em' }}
+                style={{ backgroundColor: '#475569', color: 'white', borderColor: '#374151', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em' }}
+                className="mt-1 w-full p-2 rounded text-sm border focus:outline-none focus:ring-2 appearance-none"
               >
-                <option value="same" className="bg-white text-gray-900">same</option>
-                <option value="widened" className="bg-white text-gray-900">widened</option>
+                <option value="same" style={{backgroundColor: '#475569', color: 'white'}}>same</option>
+                <option value="widened" style={{backgroundColor: '#475569', color: 'white'}}>widened</option>
               </select>
             </div>
-            <div className="flex-shrink-0 min-w-[110px]">
-              <label className="text-[0.85rem] text-black-300">Seed</label>
-              <input type="number" value={seed} onChange={e => setSeed(e.target.value)} className="mt-1 w-full p-1 rounded text-xs bg-white text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="e.g. 42" />
+            <div className="flex-shrink-0 w-full sm:flex-1 sm:min-w-0">
+              <label className="text-xs sm:text-sm text-slate-200 block">Seed</label>
+              <input type="number" value={seed} onChange={e => setSeed(e.target.value)} style={{ backgroundColor: '#475569', color: 'white', borderColor: '#374151'}} className="mt-1 w-full p-2 rounded text-sm border placeholder-gray-400 focus:outline-none focus:ring-2" placeholder="e.g. 42" />
             </div>
-            <div className="flex flex-row gap-1 items-end flex-shrink-0 min-w-[120px]">
-              <button type="button" onClick={apply} className="btn-primary min-w-[140px] max-w-[180px] text-base text-center whitespace-nowrap flex justify-center items-center px-4 py-2 transition-all duration-200">Apply</button>
-              <button type="button" onClick={() => { setSeed(''); setRounding('nearest'); setAccumulation('same'); }} className="btn-ghost min-w-[140px] max-w-[180px] text-base text-center whitespace-nowrap flex justify-center items-center px-4 py-2 transition-all duration-200">Reset</button>
+            <div className="flex flex-row gap-2 sm:gap-2 items-end flex-shrink-0 w-full sm:w-auto sm:flex-shrink-0">
+              <button type="button" onClick={apply} className="btn-primary flex-1 sm:flex-none text-xs sm:text-sm text-center whitespace-nowrap flex justify-center items-center px-3 py-2 transition-all duration-200">Apply</button>
+              <button type="button" onClick={() => { setSeed(''); setRounding('nearest'); setAccumulation('same'); }} className="btn-ghost flex-1 sm:flex-none text-xs sm:text-sm text-center whitespace-nowrap flex justify-center items-center px-3 py-2 transition-all duration-200">Reset</button>
             </div>
           </div>
         </div>
