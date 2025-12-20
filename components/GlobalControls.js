@@ -8,7 +8,7 @@ import { FaChevronDown } from 'react-icons/fa';
 export const SidebarContext = React.createContext({ open: true, setOpen: () => {} });
 export function useSidebar() { return useContext(SidebarContext); }
 
-export default function GlobalControls() {
+function GlobalControlsComponent() {
   const { open, setOpen } = useSidebar();
   const { systems, selected, setSelected, updateSelectedParams } = useNumeric();
   const router = useRouter();
@@ -29,20 +29,19 @@ export default function GlobalControls() {
   }
 
   return (
-    <>
-      {/* Bottom bar controls */}
-      <aside
-        className={`fixed left-0 right-0 mx-auto bottom-0 z-30 w-full sm:max-w-5xl md:max-w-7xl shadow-2xl rounded-none sm:rounded-t-3xl px-2 sm:px-6 pt-6 sm:pt-7 pb-4 flex flex-col items-stretch gap-4 transition-transform duration-500 will-change-transform overflow-visible`}
-        style={{
-          backgroundColor: 'rgba(100, 116, 139, 0.75)',
-          borderTop: '1px solid rgba(71, 85, 105, 0.8)',
-          backdropFilter: 'blur(18px)',
-          WebkitBackdropFilter: 'blur(18px)',
-          minHeight: open ? 'auto' : '36px',
-          transform: open ? 'translateY(0)' : 'translateY(75%)',
-          paddingBottom: 'calc(env(safe-area-inset-bottom, 1.5rem) + 0.5rem)',
-        }}
-      >
+    <aside
+      className={`fixed bottom-0 left-0 right-0 z-40 shadow-2xl rounded-t-3xl px-2 sm:px-6 pt-6 sm:pt-7 pb-4 flex flex-col items-stretch gap-4 transition-transform duration-500`}
+      style={{
+        backgroundColor: 'rgba(100, 116, 139, 0.75)',
+        borderTop: '2px solid rgba(100, 116, 139, 1)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        minHeight: open ? 'auto' : '36px',
+        transform: open ? 'translateY(0)' : 'translateY(calc(100% - 36px))',
+        paddingBottom: 'calc(env(safe-area-inset-bottom, 1.5rem) + 0.5rem)',
+        overflow: 'visible',
+      }}
+    >
         {/* Arrow button centered on top border */}
         <div className="absolute left-0 right-0 flex justify-center" style={{top: '-22px'}}>
           <button
@@ -108,35 +107,44 @@ export default function GlobalControls() {
               });
             })()}
           </div>
+          {/* SEN-SFP Explorer Button */}
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={() => router.push('/sensfp')}
+              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-semibold transition-all duration-200 border-2 border-purple-400 whitespace-nowrap"
+            >
+              SEN-SFP Explorer
+            </button>
+          </div>
           {/* Second row: controls and buttons - responsive layout */}
           <div className="flex flex-col sm:flex-row flex-nowrap gap-3 sm:gap-2 items-stretch sm:items-end mt-2 min-w-0 overflow-hidden">
             <div className="flex-shrink-0 w-full sm:flex-1 sm:min-w-0">
-              <label className="text-xs sm:text-sm text-slate-200 block">Rounding</label>
+              <label className="text-xs sm:text-sm text-slate-200 block font-bold">Rounding</label>
               <select
                 value={rounding}
                 onChange={e => setRounding(e.target.value)}
-                style={{ backgroundColor: '#475569', color: 'white', borderColor: '#374151', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em' }}
+                style={{ backgroundColor: '#0f172a', color: '#f1f5f9', borderColor: '#475569', borderWidth: '2px', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em', fontWeight: 'bold' }}
                 className="mt-1 w-full p-2 rounded text-sm border focus:outline-none focus:ring-2 appearance-none"
               >
-                <option value="nearest" style={{backgroundColor: '#475569', color: 'white'}}>nearest</option>
-                <option value="stochastic" style={{backgroundColor: '#475569', color: 'white'}}>stochastic</option>
+                <option value="nearest" style={{backgroundColor: '#0f172a', color: '#f1f5f9', fontWeight: 'bold'}}>nearest</option>
+                <option value="stochastic" style={{backgroundColor: '#0f172a', color: '#f1f5f9', fontWeight: 'bold'}}>stochastic</option>
               </select>
             </div>
             <div className="flex-shrink-0 w-full sm:flex-1 sm:min-w-0">
-              <label className="text-xs sm:text-sm text-slate-200 block">Accum.</label>
+              <label className="text-xs sm:text-sm text-slate-200 block font-bold">Accum.</label>
               <select
                 value={accumulation}
                 onChange={e => setAccumulation(e.target.value)}
-                style={{ backgroundColor: '#475569', color: 'white', borderColor: '#374151', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em' }}
+                style={{ backgroundColor: '#0f172a', color: '#f1f5f9', borderColor: '#475569', borderWidth: '2px', backgroundPosition: 'right 0.5rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em 1.2em', fontWeight: 'bold' }}
                 className="mt-1 w-full p-2 rounded text-sm border focus:outline-none focus:ring-2 appearance-none"
               >
-                <option value="same" style={{backgroundColor: '#475569', color: 'white'}}>same</option>
-                <option value="widened" style={{backgroundColor: '#475569', color: 'white'}}>widened</option>
+                <option value="same" style={{backgroundColor: '#0f172a', color: '#f1f5f9', fontWeight: 'bold'}}>same</option>
+                <option value="widened" style={{backgroundColor: '#0f172a', color: '#f1f5f9', fontWeight: 'bold'}}>widened</option>
               </select>
             </div>
             <div className="flex-shrink-0 w-full sm:flex-1 sm:min-w-0">
-              <label className="text-xs sm:text-sm text-slate-200 block">Seed</label>
-              <input type="number" value={seed} onChange={e => setSeed(e.target.value)} style={{ backgroundColor: '#475569', color: 'white', borderColor: '#374151'}} className="mt-1 w-full p-2 rounded text-sm border placeholder-gray-400 focus:outline-none focus:ring-2" placeholder="e.g. 42" />
+              <label className="text-xs sm:text-sm text-slate-200 block font-bold">Seed</label>
+              <input type="number" value={seed} onChange={e => setSeed(e.target.value)} style={{ backgroundColor: '#0f172a', color: '#f1f5f9', borderColor: '#475569', borderWidth: '2px', fontWeight: 'bold'}} className="mt-1 w-full p-2 rounded text-sm border placeholder-slate-300 focus:outline-none focus:ring-2" placeholder="e.g. 42" />
             </div>
             <div className="flex flex-row gap-2 sm:gap-2 items-end flex-shrink-0 w-full sm:w-auto sm:flex-shrink-0">
               <button type="button" onClick={apply} className="btn-primary flex-1 sm:flex-none text-xs sm:text-sm text-center whitespace-nowrap flex justify-center items-center px-3 py-2 transition-all duration-200">Apply</button>
@@ -145,6 +153,7 @@ export default function GlobalControls() {
           </div>
         </div>
       </aside>
-    </>
-  )
+    );
 }
+
+export default GlobalControlsComponent;

@@ -12,12 +12,12 @@ export function Layout({ children }) {
         <div className="flex flex-1 relative w-full overflow-hidden">
           <main
             className={`flex-1 w-full overflow-x-hidden transition-all duration-300`}
-            style={{ minHeight: 'calc(100vh - 64px)', paddingTop: '4.5rem', paddingBottom: 'env(safe-area-inset-bottom, 1.5rem)' }}
+            style={{ minHeight: 'calc(100vh - 64px)', paddingTop: '4.5rem', paddingBottom: '300px' }}
           >
             {children}
           </main>
-          <GlobalControls />
         </div>
+        <GlobalControls />
       </div>
     </SidebarContext.Provider>
   )
